@@ -3,22 +3,22 @@ package categoria
 import "errors"
 
 type Service struct {
-	repository Repository
+	repository *Repository
 }
 
-func NewService(repository *Repository) Service {
-	return Service{
-		repository: *repository,
+func NewService(repository *Repository) *Service {
+	return &Service{
+		repository: repository,
 	}
 }
 
-func (s *Service) NovaCategoria(nome string) error {
+func (s *Service) NovaCategoria(categoria Categoria) error {
 
-	if nome == "" {
+	if categoria.Nome == "" {
 		return errors.New("Nome de categoria é obrigatória")
 	}
 
-	return s.repository.AddCategoria(nome)
+	return s.repository.AddCategoria(categoria)
 }
 
 func (s *Service) ListarTodasCategorias() ([]Categoria, error) {
